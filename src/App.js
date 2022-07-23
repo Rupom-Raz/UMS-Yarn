@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Header from "./components/Header";
+import AddCurriculam from "./Pages/AddCurriculam";
+import AddTutionFee from "./Pages/AddTutionFee";
+import CourseLists from "./Pages/CourseLists";
+import CourseOffer from "./Pages/CourseOffer";
+import Programs from "./Pages/Programs";
+import Semester from "./Pages/Semester";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <>
+            <Router>
+                <Header />
+                <Routes>
+                    <Route path="/semester" element={<Semester />} />
+                    <Route path="/courselist" element={<CourseLists />} />
+                    <Route path="/curriculam" element={<AddCurriculam />} />
+                    <Route path="/tutionfee" element={<AddTutionFee />} />
+                    <Route path="/program" element={<Programs />} />
+                    <Route path="/courseoffer" element={<CourseOffer />} />
+                </Routes>
+            </Router>
+        </>
+    );
+};
 
 export default App;
