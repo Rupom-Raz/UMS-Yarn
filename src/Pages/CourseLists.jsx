@@ -13,7 +13,7 @@ const CourseLists = () => {
     return (
         <>
             <AddCourseModal handleClose={handleClose} open={open} />
-            <Card className="courseCard mt-5 mx-auto">
+            <Card className="courseCard mt-5">
                 <Card.Body>
                     <div className="container-fluid">
                         <div className="row justify-content-between my-3">
