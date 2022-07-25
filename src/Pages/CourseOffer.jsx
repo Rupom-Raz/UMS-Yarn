@@ -1,4 +1,4 @@
-import { Button, Col, Form, Modal, Row, Select } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
 import React, { useState } from "react";
 
 import { colors } from "../Theme/colors";
@@ -16,10 +16,9 @@ const CourseOffer = () => {
         { semester: "7" },
         { semester: "8" },
     ]);
-
+    const [semesterNo, setSemesterNo] = useState([{ value: "" }]);
     const [step, setStep] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
-
     const handleCancel = () => {
         setIsModalVisible(false);
     };
@@ -33,195 +32,59 @@ const CourseOffer = () => {
     const handleBack = () => {
         setStep((prev) => prev - 1);
     };
+    // const handleChange = (e) => {
+    //     console.log(e);
+    //     setSemesterNo({ value: e });
+    //     console.log(` semester no is ${semesterNo}`);
+    // };
+
+    const onFinish = (e) => {
+        handleNext();
+        console.log(`Form values ${JSON.stringify(e)}`);
+    };
 
     const SecondForm = () => {
         return (
             <React.Fragment>
-                <Form>
+                <Form onFinish={onFinish}>
                     <Row gutter={30}>
                         <Col span={12}>
+                            <Form.Item label="Semester" />
+                            {semesterNo.value && (
+                                <Form.Item>
+                                    <Input value={semesterNo.value} />
+                                </Form.Item>
+                            )}
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item label="Section" />
                             <Form.Item>
                                 <Select
-                                    defaultValue="Select Semester"
+                                    defaultValue="Select Semester and Section"
                                     style={{
                                         width: "100%",
                                     }}
                                 >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
+                                    <Option value="Select Semester and Section">
+                                        Select Section
+                                    </Option>
+                                    <Option value={`${semesterNo.value}(A)`}>
+                                        {`${semesterNo.value}`}(A)
+                                    </Option>
+                                    <Option value={`${semesterNo.value}(B)`}>
+                                        {`${semesterNo.value}`}(B)
+                                    </Option>
+                                    <Option value={`${semesterNo.value}(C)`}>
+                                        {`${semesterNo.value}`}(C)
+                                    </Option>
+                                    <Option value={`${semesterNo.value}(D)`}>
+                                        {`${semesterNo.value}`}(D)
+                                    </Option>
                                 </Select>
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col span={12}>
-                            <Form.Item>
-                                <Select
-                                    defaultValue="Select Semester"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                >
-                                    {semesters.map((val) => {
-                                        return (
-                                            <Select.Option
-                                                value={val.semester}
-                                                key={val.semester}
-                                            >
-                                                {val.semester}
-                                            </Select.Option>
-                                        );
-                                    })}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
+
                     <Row gutter={30}>
                         <Col>
                             <Form.Item>
@@ -236,7 +99,7 @@ const CourseOffer = () => {
                                     Back
                                 </Button>
                                 <Button
-                                    onClick={handleNext}
+                                    htmlType="submit"
                                     style={{
                                         backgroundColor: colors.purple,
                                         color: colors.white,
@@ -356,11 +219,6 @@ const CourseOffer = () => {
         );
     };
 
-    const onFinish = (e) => {
-        handleNext();
-        console.log(` From value ${e}`);
-    };
-
     return (
         <React.Fragment>
             <Button
@@ -388,24 +246,36 @@ const CourseOffer = () => {
                     <Form onFinish={onFinish}>
                         <Row gutter={30}>
                             <Col span={12}>
-                                <Form.Item rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="program"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please Select a Program!",
+                                        },
+                                    ]}
+                                >
                                     <Select
-                                        defaultValue="Select Session"
+                                        defaultValue="Select Programs"
                                         style={{
                                             width: "100%",
                                         }}
                                     >
-                                        <Select.Option value="Summer">
-                                            Summer
-                                        </Select.Option>
-                                        <Select.Option value="Spring">
-                                            Spring
-                                        </Select.Option>
+                                        <Option value="B.Sc ">B.Sc</Option>
+                                        <Option value="M.Sc">M.Sc</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Form.Item>
+                                <Form.Item
+                                    name="year"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please Select a Year!",
+                                        },
+                                    ]}
+                                >
                                     <Select
                                         defaultValue="Select Year"
                                         style={{
@@ -430,12 +300,24 @@ const CourseOffer = () => {
                         </Row>
                         <Row gutter={30}>
                             <Col span={12}>
-                                <Form.Item>
+                                <Form.Item
+                                    name="semester"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                "Please Select a Semester!",
+                                        },
+                                    ]}
+                                >
                                     <Select
                                         defaultValue="Select Semester"
                                         style={{
                                             width: "100%",
                                         }}
+                                        onChange={(e) =>
+                                            setSemesterNo({ value: e })
+                                        }
                                     >
                                         {semesters.map((val) => {
                                             return (
@@ -451,15 +333,27 @@ const CourseOffer = () => {
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Form.Item>
+                                <Form.Item
+                                    name="session"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please Select a Session!",
+                                        },
+                                    ]}
+                                >
                                     <Select
-                                        defaultValue="Select Programs"
+                                        defaultValue="Select Session"
                                         style={{
                                             width: "100%",
                                         }}
                                     >
-                                        <Option value="B.Sc ">B.Sc</Option>
-                                        <Option value="M.Sc">M.Sc</Option>
+                                        <Select.Option value="Summer">
+                                            Summer
+                                        </Select.Option>
+                                        <Select.Option value="Spring">
+                                            Spring
+                                        </Select.Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
