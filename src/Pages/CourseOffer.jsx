@@ -1312,6 +1312,7 @@ const CourseOffer = () => {
 
     const handleCancel = () => {
         setIsModalVisible(false);
+        setStep(1);
     };
     const showModal = () => {
         setIsModalVisible(true);
