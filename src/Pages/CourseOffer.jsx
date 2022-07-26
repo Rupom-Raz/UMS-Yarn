@@ -1296,9 +1296,17 @@ const CourseOffer = () => {
             ProgramCode: "12101",
         },
     ]);
+
     const [inItSemester, setinItSemester] = useState([]);
     const [semesterNo, setSemesterNo] = useState([]);
-    const [section, setSection] = useState([{ value: "" }]);
+    const [section, setSection] = useState([
+        { id: 1, name: "None" },
+        { id: 2, name: "A" },
+        { id: 3, name: "B" },
+        { id: 4, name: "C" },
+        { id: 5, name: "D" },
+    ]);
+    const [semesterValue, setSemesterValue] = useState([]);
     const [step, setStep] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -1317,6 +1325,7 @@ const CourseOffer = () => {
     };
 
     const handleSubmit1 = (e) => {
+        console.log(JSON.stringify(e));
         const semesterValue = e.semester;
         handleNext();
         let Data = [];
@@ -1326,8 +1335,16 @@ const CourseOffer = () => {
         setinItSemester(Data);
     };
     const handleSubmit2 = (e) => {
+        const { semester, section } = e;
+        let Data = [];
+        for (let i = 1; i <= semester; i++) {
+            Data.push({
+                SemesterValue: i,
+                SectionValue: section,
+            });
+        }
+        setSemesterValue(Data);
         handleNext();
-        console.log(`Form values ${Object.values(e)}`);
     };
     const handleSubmit3 = (e) => {
         handleNext();
@@ -1343,7 +1360,7 @@ const CourseOffer = () => {
                             <Form.Item label="Semester" />
                             {inItSemester?.map((val) => {
                                 return (
-                                    <Form.Item>
+                                    <Form.Item name="semester">
                                         <Input value={val.Semester} />
                                     </Form.Item>
                                 );
@@ -1354,19 +1371,22 @@ const CourseOffer = () => {
                             {inItSemester?.map((val) => {
                                 return (
                                     <>
-                                        <Form.Item>
+                                        <Form.Item name="section">
                                             <Select
-                                                name="section"
                                                 defaultValue="Select Section"
                                                 style={{
                                                     width: "100%",
                                                 }}
                                             >
-                                                <Option
-                                                    value={`${val.Semester}`}
-                                                >
-                                                    {val.Semester}
-                                                </Option>
+                                                {section?.map((val) => {
+                                                    return (
+                                                        <Option
+                                                            value={val.name}
+                                                        >
+                                                            {val.name}
+                                                        </Option>
+                                                    );
+                                                })}
                                             </Select>
                                         </Form.Item>
                                     </>
@@ -1411,26 +1431,38 @@ const CourseOffer = () => {
                     <Row gutter={30}>
                         <Col span={12}>
                             <Form.Item label="Semester and Section" />
-                            <Form.Item>
-                                <Input value={section} />
-                            </Form.Item>
+                            {semesterValue?.map((val) => {
+                                return (
+                                    <Form.Item>
+                                        <Input
+                                            value={`${val.SemesterValue}(${val.SectionValue})`}
+                                        />
+                                    </Form.Item>
+                                );
+                            })}
                         </Col>
                         <Col span={12}>
-                            <Form.Item>
-                                <Form.Item label="Select Course" />
-                                <Select defaultValue="Select Course">
-                                    {course &&
-                                        course.map((val) => {
-                                            return (
-                                                <Select.Option
-                                                    key={val.CourseTitle}
-                                                >
-                                                    {val.CourseTitle}
-                                                </Select.Option>
-                                            );
-                                        })}
-                                </Select>
-                            </Form.Item>
+                            <Form.Item label="Select Course" />
+                            {semesterValue?.map((val) => {
+                                return (
+                                    <Form.Item>
+                                        <Select defaultValue="Select Course">
+                                            {course &&
+                                                course.map((val) => {
+                                                    return (
+                                                        <Select.Option
+                                                            key={
+                                                                val.CourseTitle
+                                                            }
+                                                        >
+                                                            {val.CourseTitle}
+                                                        </Select.Option>
+                                                    );
+                                                })}
+                                        </Select>
+                                    </Form.Item>
+                                );
+                            })}
                         </Col>
                     </Row>
                     <Row gutter={30}>
@@ -1504,7 +1536,7 @@ const CourseOffer = () => {
                                             width: "100%",
                                         }}
                                     >
-                                        <Option value="B.Sc ">B.Sc</Option>
+                                        <Option value="B.Sc">B.Sc</Option>
                                         <Option value="M.Sc">M.Sc</Option>
                                     </Select>
                                 </Form.Item>
