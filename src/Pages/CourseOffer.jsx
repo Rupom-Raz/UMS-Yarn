@@ -1337,6 +1337,7 @@ const CourseOffer = () => {
     };
     const handleSubmit2 = (e) => {
         const { semester, section } = e;
+        console.log(semester, section);
         let Data = [];
         for (let i = 1; i <= semester; i++) {
             Data.push({
