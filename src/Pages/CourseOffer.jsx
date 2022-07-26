@@ -1351,32 +1351,27 @@ const CourseOffer = () => {
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Section" />
-                            <Form.Item>
-                                <Select
-                                    name="section"
-                                    defaultValue="Select Section"
-                                    style={{
-                                        width: "100%",
-                                    }}
-                                    onChange={(e) => setSection(e)}
-                                >
-                                    <Option value="Select Section">
-                                        Select Section
-                                    </Option>
-                                    <Option value={`${semesterNo}(A)`}>
-                                        {`${semesterNo}`}(A)
-                                    </Option>
-                                    <Option value={`${semesterNo}(B)`}>
-                                        {`${semesterNo}`}(B)
-                                    </Option>
-                                    <Option value={`${semesterNo}(C)`}>
-                                        {`${semesterNo}`}(C)
-                                    </Option>
-                                    <Option value={`${semesterNo}(D)`}>
-                                        {`${semesterNo}`}(D)
-                                    </Option>
-                                </Select>
-                            </Form.Item>
+                            {inItSemester?.map((val) => {
+                                return (
+                                    <>
+                                        <Form.Item>
+                                            <Select
+                                                name="section"
+                                                defaultValue="Select Section"
+                                                style={{
+                                                    width: "100%",
+                                                }}
+                                            >
+                                                <Option
+                                                    value={`${val.Semester}`}
+                                                >
+                                                    {val.Semester}
+                                                </Option>
+                                            </Select>
+                                        </Form.Item>
+                                    </>
+                                );
+                            })}
                         </Col>
                     </Row>
 
