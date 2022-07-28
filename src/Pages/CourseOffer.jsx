@@ -1,11 +1,27 @@
-import { Button, Col, Form, Input, Modal, Row, Select } from "antd";
+import { Paper, Typography } from "@mui/material";
+import { Button, Col, DatePicker, Form, Modal, Row, Select } from "antd";
 import React, { useState } from "react";
+
+import { useAlert } from "react-alert";
 
 import { colors } from "../Theme/colors";
 
 const { Option } = Select;
 
 const CourseOffer = () => {
+    const Alert = useAlert();
+    const [from1Details, setForm1Details] = useState([
+        { program: "" },
+        { session: "" },
+        { year: "" },
+        { startDate: "" },
+        { endDate: "" },
+        { semester: "" },
+        { section: "" },
+        { course: "" },
+    ]);
+    const [showCard1, setShowCard1] = useState(false);
+
     const [semesters, setSemesters] = useState([
         { semester: 1 },
         { semester: 2 },
@@ -1313,6 +1329,17 @@ const CourseOffer = () => {
     const handleCancel = () => {
         setIsModalVisible(false);
         setStep(1);
+        setForm1Details([
+            { program: "" },
+            { session: "" },
+            { year: "" },
+            { startDate: "" },
+            { endDate: "" },
+            { semester: "" },
+            { section: "" },
+            { course: "" },
+        ]);
+        setShowCard1(false);
     };
     const showModal = () => {
         setIsModalVisible(true);
@@ -1326,31 +1353,28 @@ const CourseOffer = () => {
     };
 
     const handleSubmit1 = (e) => {
-        console.log(JSON.stringify(e));
-        const semesterValue = e.semester;
-        handleNext();
-        let Data = [];
-        for (let i = 1; i <= semesterValue; i++) {
-            Data.push({ Semester: i });
-        }
-        setinItSemester(Data);
+        const startDate = new Date(e.startDate).toLocaleDateString();
+        const endDate = new Date(e.endDate).toLocaleDateString();
+        setForm1Details([
+            { program: e.program },
+            { session: e.session },
+            { year: e.year },
+            { startDate: startDate },
+            { endDate: endDate },
+        ]);
+        setShowCard1(true);
     };
     const handleSubmit2 = (e) => {
-        const { semester, section } = e;
-        console.log(semester, section);
-        let Data = [];
-        for (let i = 1; i <= semester; i++) {
-            Data.push({
-                SemesterValue: i,
-                SectionValue: section,
-            });
-        }
-        setSemesterValue(Data);
-        handleNext();
+        setForm1Details([
+            ...from1Details,
+            { semester: e.semester },
+            { section: e.section },
+        ]);
+        setShowCard1(false);
     };
     const handleSubmit3 = (e) => {
-        handleNext();
-        console.log(`Form values ${Object.values(e)}`);
+        setForm1Details([...from1Details, { course: e.course }]);
+        setShowCard1(true);
     };
 
     const SecondForm = () => {
@@ -1360,66 +1384,137 @@ const CourseOffer = () => {
                     <Row gutter={30}>
                         <Col span={12}>
                             <Form.Item label="Semester" />
-                            {inItSemester?.map((val) => {
-                                return (
-                                    <Form.Item name="semester">
-                                        <Input value={val.Semester} />
-                                    </Form.Item>
-                                );
-                            })}
+
+                            <Form.Item name="semester">
+                                <Select defaultValue={"Select a Semester"}>
+                                    <Select.Option value="1">1</Select.Option>
+                                    <Select.Option value="2">2</Select.Option>
+                                    <Select.Option value="3">3</Select.Option>
+                                    <Select.Option value="4">4</Select.Option>
+                                    <Select.Option value="5">5</Select.Option>
+                                    <Select.Option value="6">6</Select.Option>
+                                    <Select.Option value="7">7</Select.Option>
+                                    <Select.Option value="8">8</Select.Option>
+                                </Select>
+                            </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Section" />
-                            {inItSemester?.map((val) => {
-                                return (
-                                    <>
-                                        <Form.Item name="section">
-                                            <Select
-                                                defaultValue="Select Section"
-                                                style={{
-                                                    width: "100%",
-                                                }}
-                                            >
-                                                {section?.map((val) => {
-                                                    return (
-                                                        <Option
-                                                            value={val.name}
-                                                        >
-                                                            {val.name}
-                                                        </Option>
-                                                    );
-                                                })}
-                                            </Select>
-                                        </Form.Item>
-                                    </>
-                                );
-                            })}
+
+                            <>
+                                <Form.Item name="section">
+                                    <Select
+                                        defaultValue="Select Section"
+                                        style={{
+                                            width: "100%",
+                                        }}
+                                    >
+                                        <Select.Option value="None">
+                                            None
+                                        </Select.Option>
+                                        <Select.Option value="A">
+                                            A
+                                        </Select.Option>
+                                        <Select.Option value="B">
+                                            B
+                                        </Select.Option>
+                                        <Select.Option value="C">
+                                            C
+                                        </Select.Option>
+                                        <Select.Option value="D">
+                                            D
+                                        </Select.Option>
+                                    </Select>
+                                </Form.Item>
+                            </>
                         </Col>
+
+                        {!showCard1 && (
+                            <Col span={12}>
+                                <Paper
+                                    elevation={20}
+                                    style={{
+                                        padding: "20px",
+                                        marginBottom: "20px",
+                                    }}
+                                >
+                                    <h5
+                                        style={{
+                                            color: colors.purple,
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        Semester Details
+                                    </h5>
+                                    {from1Details?.map((val) => {
+                                        return (
+                                            <>
+                                                <Typography>
+                                                    {val.program}
+                                                </Typography>
+                                                <Typography>
+                                                    {val.session}
+                                                </Typography>
+                                                <Typography>
+                                                    {val.year}
+                                                </Typography>
+                                                <Typography>
+                                                    {val.startDate}
+                                                </Typography>
+                                                <Typography>
+                                                    {val.endDate}
+                                                </Typography>
+
+                                                <Typography>
+                                                    {val.semester}
+                                                </Typography>
+                                                <Typography>
+                                                    {val.section}
+                                                </Typography>
+                                            </>
+                                        );
+                                    })}
+                                </Paper>
+                            </Col>
+                        )}
+                        {showCard1 && (
+                            <Button
+                                htmlType="submit"
+                                style={{
+                                    backgroundColor: colors.purple,
+                                    color: colors.white,
+                                }}
+                            >
+                                Set Semester
+                            </Button>
+                        )}
                     </Row>
 
                     <Row gutter={30}>
                         <Col>
-                            <Form.Item>
-                                <Button
-                                    onClick={handleBack}
-                                    style={{
-                                        backgroundColor: colors.purple,
-                                        color: colors.white,
-                                        marginRight: "10px",
-                                    }}
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    htmlType="submit"
-                                    style={{
-                                        backgroundColor: colors.purple,
-                                        color: colors.white,
-                                    }}
-                                >
-                                    Continue
-                                </Button>
-                            </Form.Item>
+                            {!showCard1 && (
+                                <Form.Item>
+                                    <Button
+                                        onClick={handleBack}
+                                        style={{
+                                            backgroundColor: colors.purple,
+                                            color: colors.white,
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        onClick={() => setStep(3)}
+                                        style={{
+                                            backgroundColor: colors.purple,
+                                            color: colors.white,
+                                        }}
+                                    >
+                                        Continue
+                                    </Button>
+                                </Form.Item>
+                            )}
                         </Col>
                     </Row>
                 </Form>
@@ -1432,68 +1527,128 @@ const CourseOffer = () => {
                 <Form onFinish={handleSubmit3}>
                     <Row gutter={30}>
                         <Col span={12}>
-                            <Form.Item label="Semester and Section" />
-                            {semesterValue?.map((val) => {
-                                return (
-                                    <Form.Item>
-                                        <Input
-                                            value={`${val.SemesterValue}(${val.SectionValue})`}
-                                        />
-                                    </Form.Item>
-                                );
-                            })}
-                        </Col>
-                        <Col span={12}>
                             <Form.Item label="Select Course" />
-                            {semesterValue?.map((val) => {
-                                return (
-                                    <Form.Item>
-                                        <Select defaultValue="Select Course">
-                                            {course &&
-                                                course.map((val) => {
-                                                    return (
-                                                        <Select.Option
-                                                            key={
-                                                                val.CourseTitle
-                                                            }
-                                                        >
-                                                            {val.CourseTitle}
-                                                        </Select.Option>
-                                                    );
-                                                })}
-                                        </Select>
-                                    </Form.Item>
-                                );
-                            })}
-                        </Col>
-                    </Row>
-                    <Row gutter={30}>
-                        <Col>
-                            <Form.Item>
-                                <Button
-                                    onClick={handleBack}
-                                    style={{
-                                        backgroundColor: colors.purple,
-                                        color: colors.white,
-                                        marginRight: "10px",
-                                    }}
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    style={{
-                                        backgroundColor: colors.purple,
-                                        color: colors.white,
-                                    }}
-                                >
-                                    Set the Course
-                                </Button>
+
+                            <Form.Item name="course">
+                                <Select defaultValue="Select Course">
+                                    {course &&
+                                        course.map((val) => {
+                                            return (
+                                                <Select.Option
+                                                    key={val.CourseTitle}
+                                                >
+                                                    {val.CourseTitle}
+                                                </Select.Option>
+                                            );
+                                        })}
+                                </Select>
                             </Form.Item>
                         </Col>
+                    </Row>
+
+                    <Row>
+                        <Col span={12}>
+                            {showCard1 && (
+                                <Paper
+                                    elevation={20}
+                                    style={{
+                                        padding: "20px",
+                                        marginTop: "-10px",
+                                        marginBottom: "20px",
+                                    }}
+                                >
+                                    <h5
+                                        style={{
+                                            color: colors.purple,
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        Course Details
+                                    </h5>
+                                    {from1Details?.map((val) => {
+                                        return (
+                                            <>
+                                                <Typography key={val.program}>
+                                                    {val.program}
+                                                </Typography>
+                                                <Typography key={val.session}>
+                                                    {val.session}
+                                                </Typography>
+                                                <Typography key={val.year}>
+                                                    {val.year}
+                                                </Typography>
+                                                <Typography key={val.startDate}>
+                                                    {val.startDate}
+                                                </Typography>
+                                                <Typography key={val.endDate}>
+                                                    {val.endDate}
+                                                </Typography>
+                                                <Typography key={val.semester}>
+                                                    {val.semester}
+                                                </Typography>
+                                                <Typography key={val.section}>
+                                                    {val.section}
+                                                </Typography>
+                                                <Typography key={val.course}>
+                                                    {val.course}
+                                                </Typography>
+                                            </>
+                                        );
+                                    })}
+                                </Paper>
+                            )}
+                        </Col>
+                    </Row>
+                    {!showCard1 && (
+                        <Button
+                            htmlType="submit"
+                            style={{
+                                backgroundColor: colors.purple,
+                                color: colors.white,
+                            }}
+                        >
+                            Set Course
+                        </Button>
+                    )}
+
+                    <Row gutter={30}>
+                        {showCard1 && (
+                            <Col>
+                                <Form.Item>
+                                    <Button
+                                        onClick={handleBack}
+                                        style={{
+                                            backgroundColor: colors.purple,
+                                            color: colors.white,
+                                            marginRight: "10px",
+                                        }}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        style={{
+                                            backgroundColor: colors.purple,
+                                            color: colors.white,
+                                        }}
+                                    >
+                                        Publish the Course
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        )}
                     </Row>
                 </Form>
             </React.Fragment>
         );
+    };
+    const config = {
+        rules: [
+            {
+                type: "object",
+                required: true,
+                message: "Please select time!",
+            },
+        ],
     };
 
     return (
@@ -1505,7 +1660,7 @@ const CourseOffer = () => {
                 }}
                 onClick={showModal}
             >
-                Course Offer
+                Set a Semester
             </Button>
             <Modal
                 bodyStyle={{ height: "100vh" }}
@@ -1522,7 +1677,7 @@ const CourseOffer = () => {
                 {step === 1 ? (
                     <Form onFinish={handleSubmit1}>
                         <Row gutter={30}>
-                            <Col span={12}>
+                            <Col span={8}>
                                 <Form.Item
                                     name="program"
                                     rules={[
@@ -1543,7 +1698,33 @@ const CourseOffer = () => {
                                     </Select>
                                 </Form.Item>
                             </Col>
-                            <Col span={12}>
+
+                            <Col span={8}>
+                                <Form.Item
+                                    name="session"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "Please Select a Session!",
+                                        },
+                                    ]}
+                                >
+                                    <Select
+                                        defaultValue="Select Session"
+                                        style={{
+                                            width: "100%",
+                                        }}
+                                    >
+                                        <Select.Option value="Summer">
+                                            Summer
+                                        </Select.Option>
+                                        <Select.Option value="Spring">
+                                            Spring
+                                        </Select.Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}>
                                 <Form.Item
                                     name="year"
                                     rules={[
@@ -1576,74 +1757,109 @@ const CourseOffer = () => {
                             </Col>
                         </Row>
                         <Row gutter={30}>
-                            <Col span={12}>
+                            <Col span={8}>
                                 <Form.Item
-                                    name="semester"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                "Please Select a Semester!",
-                                        },
-                                    ]}
+                                    label="Start Date"
+                                    name="startDate"
+                                    {...config}
                                 >
-                                    <Select
-                                        defaultValue="Select Semester"
+                                    <DatePicker />
+                                </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                                <Form.Item
+                                    label="End Date"
+                                    name="endDate"
+                                    {...config}
+                                >
+                                    <DatePicker />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <Form.Item>
+                                    {!showCard1 && (
+                                        <Button
+                                            htmlType="submit"
+                                            style={{
+                                                backgroundColor: colors.purple,
+                                                color: colors.white,
+                                            }}
+                                        >
+                                            Set Semester
+                                        </Button>
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={12}>
+                                {showCard1 && (
+                                    <Paper
+                                        elevation={20}
                                         style={{
-                                            width: "100%",
+                                            padding: "20px",
+                                            marginTop: "-40px",
+                                            marginBottom: "10px",
                                         }}
-                                        onChange={(e) => setSemesterNo(e)}
                                     >
-                                        {semesters.map((val) => {
+                                        <h5
+                                            style={{
+                                                color: colors.purple,
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Semester Details
+                                        </h5>
+                                        {from1Details?.map((val) => {
                                             return (
-                                                <Select.Option
-                                                    value={val.semester}
-                                                    key={val.semester}
-                                                >
-                                                    {val.semester}
-                                                </Select.Option>
+                                                <>
+                                                    <Typography
+                                                        key={val.program}
+                                                    >
+                                                        {val.program}
+                                                    </Typography>
+                                                    <Typography
+                                                        key={val.session}
+                                                    >
+                                                        {val.session}
+                                                    </Typography>
+                                                    <Typography key={val.year}>
+                                                        {val.year}
+                                                    </Typography>
+                                                    <Typography
+                                                        key={val.startDate}
+                                                    >
+                                                        {val.startDate}
+                                                    </Typography>
+                                                    <Typography
+                                                        key={val.endDate}
+                                                    >
+                                                        {val.endDate}
+                                                    </Typography>
+                                                </>
                                             );
                                         })}
-                                    </Select>
-                                </Form.Item>
+                                    </Paper>
+                                )}
                             </Col>
-                            <Col span={12}>
-                                <Form.Item
-                                    name="session"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Please Select a Session!",
-                                        },
-                                    ]}
-                                >
-                                    <Select
-                                        defaultValue="Select Session"
-                                        style={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <Select.Option value="Summer">
-                                            Summer
-                                        </Select.Option>
-                                        <Select.Option value="Spring">
-                                            Spring
-                                        </Select.Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
+                        </Row>
+                        <Row gutter={30}>
                             <Col>
-                                <Form.Item>
-                                    <Button
-                                        htmlType="submit"
-                                        style={{
-                                            backgroundColor: colors.purple,
-                                            color: colors.white,
-                                        }}
-                                    >
-                                        Continue
-                                    </Button>
-                                </Form.Item>
+                                {showCard1 && (
+                                    <Form.Item>
+                                        <Button
+                                            onClick={() => setStep(2)}
+                                            style={{
+                                                backgroundColor: colors.purple,
+                                                color: colors.white,
+                                            }}
+                                        >
+                                            Continue
+                                        </Button>
+                                    </Form.Item>
+                                )}
                             </Col>
                         </Row>
                     </Form>
