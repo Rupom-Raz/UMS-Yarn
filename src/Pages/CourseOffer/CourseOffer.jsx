@@ -1,8 +1,10 @@
 import { Paper, Typography } from "@mui/material";
 import { Button, Col, DatePicker, Form, Modal, Row, Select } from "antd";
 import React, { useState } from "react";
+import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
 
-import { colors } from "../Theme/colors";
+import { colors } from "../../Theme/colors";
 
 const { Option } = Select;
 
@@ -1300,41 +1302,19 @@ const CourseOffer = () => {
         },
     ]);
 
-    const [inItSemester, setinItSemester] = useState([]);
-    const [semesterNo, setSemesterNo] = useState([]);
-    const [section, setSection] = useState([
-        { id: 1, name: "None" },
-        { id: 2, name: "A" },
-        { id: 3, name: "B" },
-        { id: 4, name: "C" },
-        { id: 5, name: "D" },
-    ]);
-    const [semesterValue, setSemesterValue] = useState([]);
     const [step, setStep] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const handleCancel = () => {
         setIsModalVisible(false);
         setStep(1);
-        setForm1Details([
-            { program: "" },
-            { session: "" },
-            { year: "" },
-            { startDate: "" },
-            { endDate: "" },
-            { semester: "" },
-            { section: "" },
-            { course: "" },
-        ]);
+
         setShowCard1(false);
     };
     const showModal = () => {
         setIsModalVisible(true);
     };
 
-    const handleNext = () => {
-        setStep((prev) => prev + 1);
-    };
     const handleBack = () => {
         setStep((prev) => prev - 1);
     };
@@ -1372,7 +1352,15 @@ const CourseOffer = () => {
                         <Col span={12}>
                             <Form.Item label="Semester" />
 
-                            <Form.Item name="semester">
+                            <Form.Item
+                                name="semester"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please Select a Semester!",
+                                    },
+                                ]}
+                            >
                                 <Select defaultValue={"Select a Semester"}>
                                     <Select.Option value="1">1</Select.Option>
                                     <Select.Option value="2">2</Select.Option>
@@ -1416,93 +1404,17 @@ const CourseOffer = () => {
                             </>
                         </Col>
 
-                        {!showCard1 && (
-                            <Col span={12}>
-                                <Paper
-                                    elevation={20}
-                                    style={{
-                                        padding: "20px",
-                                        marginBottom: "20px",
-                                    }}
-                                >
-                                    <h5
-                                        style={{
-                                            color: colors.purple,
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        Semester Details
-                                    </h5>
-                                    {from1Details?.map((val) => {
-                                        return (
-                                            <>
-                                                <Typography>
-                                                    {val.program}
-                                                </Typography>
-                                                <Typography>
-                                                    {val.session}
-                                                </Typography>
-                                                <Typography>
-                                                    {val.year}
-                                                </Typography>
-                                                <Typography>
-                                                    {val.startDate}
-                                                </Typography>
-                                                <Typography>
-                                                    {val.endDate}
-                                                </Typography>
-
-                                                <Typography>
-                                                    {val.semester}
-                                                </Typography>
-                                                <Typography>
-                                                    {val.section}
-                                                </Typography>
-                                            </>
-                                        );
-                                    })}
-                                </Paper>
-                            </Col>
-                        )}
-                        {showCard1 && (
-                            <Button
-                                htmlType="submit"
-                                style={{
-                                    backgroundColor: colors.purple,
-                                    color: colors.white,
-                                }}
-                            >
-                                Set Semester
-                            </Button>
-                        )}
-                    </Row>
-
-                    <Row gutter={30}>
-                        <Col>
-                            {!showCard1 && (
-                                <Form.Item>
-                                    <Button
-                                        onClick={handleBack}
-                                        style={{
-                                            backgroundColor: colors.purple,
-                                            color: colors.white,
-                                            marginRight: "10px",
-                                        }}
-                                    >
-                                        Back
-                                    </Button>
-                                    <Button
-                                        onClick={() => setStep(3)}
-                                        style={{
-                                            backgroundColor: colors.purple,
-                                            color: colors.white,
-                                        }}
-                                    >
-                                        Continue
-                                    </Button>
-                                </Form.Item>
-                            )}
-                        </Col>
+                        <Button
+                            onClick={() => setIsModalVisible(false)}
+                            htmlType="submit"
+                            style={{
+                                marginLeft: "13px",
+                                backgroundColor: colors.purple,
+                                color: colors.white,
+                            }}
+                        >
+                            Set Semester
+                        </Button>
                     </Row>
                 </Form>
             </React.Fragment>
@@ -1516,7 +1428,15 @@ const CourseOffer = () => {
                         <Col span={12}>
                             <Form.Item label="Select Course" />
 
-                            <Form.Item name="course">
+                            <Form.Item
+                                name="course"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please Select a Course!",
+                                    },
+                                ]}
+                            >
                                 <Select defaultValue="Select Course">
                                     {course &&
                                         course.map((val) => {
@@ -1541,17 +1461,22 @@ const CourseOffer = () => {
                                     style={{
                                         padding: "20px",
                                         marginTop: "-10px",
-                                        marginBottom: "20px",
+                                        marginBottom: "10px",
+                                        background:
+                                            " rgba( 255, 255, 255, 0.25 )",
+                                        boxShadow:
+                                            " 0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+                                        borderRadius: "10px",
                                     }}
                                 >
-                                    <h5
+                                    <Typography
                                         style={{
                                             color: colors.purple,
                                             textAlign: "center",
                                         }}
                                     >
                                         Course Details
-                                    </h5>
+                                    </Typography>
                                     {from1Details?.map((val) => {
                                         return (
                                             <>
@@ -1628,6 +1553,10 @@ const CourseOffer = () => {
             </React.Fragment>
         );
     };
+    // const firstViewHandler = () => {
+    //     showModal();
+    //     setStep(2);
+    // };
     const config = {
         rules: [
             {
@@ -1647,8 +1576,73 @@ const CourseOffer = () => {
                 }}
                 onClick={showModal}
             >
-                Set a Semester
+                Set a Course Offer
             </Button>
+
+            {showCard1 && (
+                <Row>
+                    <Col span={12}>
+                        <Paper
+                            elevation={20}
+                            style={{
+                                padding: "20px",
+                                marginTop: "40px",
+                                marginBottom: "10px",
+                                marginLeft: "30px",
+                                background: " rgba( 255, 255, 255, 0.25 )",
+                                boxShadow:
+                                    "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+                                borderRadius: "10px",
+                            }}
+                        >
+                            <h5
+                                style={{
+                                    color: colors.purple,
+                                    textAlign: "center",
+                                }}
+                            >
+                                Course Details
+                            </h5>
+                            <Table hover striped bordered>
+                                <thead>
+                                    <tr>
+                                        <th>Program</th>
+                                        <th>Session</th>
+                                        <th>Year</th>
+                                        <th>Starting Date</th>
+                                        <th>Ending Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        {from1Details?.map((val, id) => {
+                                            return (
+                                                <>
+                                                    <td>{val.program}</td>
+                                                </>
+                                            );
+                                        })}
+                                    </tr>
+                                </tbody>
+                            </Table>
+                            <Link
+                                to="/coursedetails"
+                                state={{ data: from1Details }}
+                                style={{
+                                    padding: "6px 20px",
+                                    borderRadius: "2px",
+                                    marginTop: "10px",
+                                    marginLeft: "250px",
+                                    backgroundColor: colors.purple,
+                                    color: colors.white,
+                                }}
+                            >
+                                See Details
+                            </Link>
+                        </Paper>
+                    </Col>
+                </Row>
+            )}
             <Modal
                 bodyStyle={{ height: "100vh" }}
                 style={{
@@ -1772,73 +1766,20 @@ const CourseOffer = () => {
                         <Row>
                             <Col span={8}>
                                 <Form.Item>
-                                    {!showCard1 && (
-                                        <Button
-                                            htmlType="submit"
-                                            style={{
-                                                backgroundColor: colors.purple,
-                                                color: colors.white,
-                                            }}
-                                        >
-                                            Set Semester
-                                        </Button>
-                                    )}
+                                    <Button
+                                        onClick={() => setIsModalVisible(false)}
+                                        htmlType="submit"
+                                        style={{
+                                            backgroundColor: colors.purple,
+                                            color: colors.white,
+                                        }}
+                                    >
+                                        Set Semester
+                                    </Button>
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col span={12}>
-                                {showCard1 && (
-                                    <Paper
-                                        elevation={20}
-                                        style={{
-                                            padding: "20px",
-                                            marginTop: "-40px",
-                                            marginBottom: "10px",
-                                        }}
-                                    >
-                                        <h5
-                                            style={{
-                                                color: colors.purple,
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            Semester Details
-                                        </h5>
 
-                                        {from1Details?.map((val) => {
-                                            return (
-                                                <>
-                                                    <Typography
-                                                        key={val.program}
-                                                    >
-                                                        {val.program}
-                                                    </Typography>
-                                                    <Typography
-                                                        key={val.session}
-                                                    >
-                                                        {val.session}
-                                                    </Typography>
-                                                    <Typography key={val.year}>
-                                                        {val.year}
-                                                    </Typography>
-                                                    <Typography
-                                                        key={val.startDate}
-                                                    >
-                                                        {val.startDate}
-                                                    </Typography>
-                                                    <Typography
-                                                        key={val.endDate}
-                                                    >
-                                                        {val.endDate}
-                                                    </Typography>
-                                                </>
-                                            );
-                                        })}
-                                    </Paper>
-                                )}
-                            </Col>
-                        </Row>
                         <Row gutter={30}>
                             <Col>
                                 {showCard1 && (

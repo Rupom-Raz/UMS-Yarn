@@ -4,7 +4,8 @@ import Header from "./components/Header";
 import AddCurriculam from "./Pages/AddCurriculam";
 import AddTutionFee from "./Pages/AddTutionFee";
 import CourseLists from "./Pages/CourseLists";
-import CourseOffer from "./Pages/CourseOffer";
+import CourseOffer from "./Pages/CourseOffer/CourseOffer";
+import CourseOfferDetails from "./Pages/CourseOffer/CourseOfferDetails";
 import Programs from "./Pages/Programs";
 import Semester from "./Pages/Semester";
 
@@ -20,6 +21,10 @@ const App = () => {
                     <Route path="/tutionfee" element={<AddTutionFee />} />
                     <Route path="/program" element={<Programs />} />
                     <Route path="/courseoffer" element={<CourseOffer />} />
+                    <Route
+                        path="/coursedetails"
+                        element={<CourseOfferDetails />}
+                    />
                 </Routes>
             </Router>
         </>
