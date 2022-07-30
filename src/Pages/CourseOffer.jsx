@@ -2,14 +2,11 @@ import { Paper, Typography } from "@mui/material";
 import { Button, Col, DatePicker, Form, Modal, Row, Select } from "antd";
 import React, { useState } from "react";
 
-import { useAlert } from "react-alert";
-
 import { colors } from "../Theme/colors";
 
 const { Option } = Select;
 
 const CourseOffer = () => {
-    const Alert = useAlert();
     const [from1Details, setForm1Details] = useState([
         { program: "" },
         { session: "" },
@@ -1753,7 +1750,10 @@ const CourseOffer = () => {
                                     name="startDate"
                                     {...config}
                                 >
-                                    <DatePicker />
+                                    <DatePicker
+                                        style={{ width: "100%" }}
+                                        format={"DD-MM-YYYY"}
+                                    />
                                 </Form.Item>
                             </Col>
                             <Col span={8}>
@@ -1762,7 +1762,10 @@ const CourseOffer = () => {
                                     name="endDate"
                                     {...config}
                                 >
-                                    <DatePicker />
+                                    <DatePicker
+                                        style={{ width: "100%" }}
+                                        format={"DD-MM-YYYY"}
+                                    />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -1802,6 +1805,7 @@ const CourseOffer = () => {
                                         >
                                             Semester Details
                                         </h5>
+
                                         {from1Details?.map((val) => {
                                             return (
                                                 <>
