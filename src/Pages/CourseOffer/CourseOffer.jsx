@@ -1,5 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import { Button, Col, DatePicker, Form, Modal, Row, Select } from "antd";
+import moment from "moment";
 import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
@@ -1557,6 +1558,12 @@ const CourseOffer = () => {
     //     showModal();
     //     setStep(2);
     // };
+
+    //Disable Current Date and Current Previous
+    const disabledDate = (current) => {
+        // Can not select days before today and today
+        return current && current < moment().endOf("day");
+    };
     const config = {
         rules: [
             {
@@ -1745,6 +1752,7 @@ const CourseOffer = () => {
                                     {...config}
                                 >
                                     <DatePicker
+                                        disabledDate={disabledDate}
                                         style={{ width: "100%" }}
                                         format={"DD-MM-YYYY"}
                                     />
@@ -1757,6 +1765,7 @@ const CourseOffer = () => {
                                     {...config}
                                 >
                                     <DatePicker
+                                        disabledDate={disabledDate}
                                         style={{ width: "100%" }}
                                         format={"DD-MM-YYYY"}
                                     />
