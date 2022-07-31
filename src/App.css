@@ -7,6 +7,9 @@
 .ant-steps-item-icon {
     background-color: #5451d6 !important;
 }
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px !important;
+}
 :root {
     /* Colors Variable */
     --Purple: "#5451D6";

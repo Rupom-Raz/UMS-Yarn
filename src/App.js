@@ -5,7 +5,10 @@ import AddCurriculam from "./Pages/AddCurriculam";
 import AddTutionFee from "./Pages/AddTutionFee";
 import CourseLists from "./Pages/CourseLists";
 import CourseOffer from "./Pages/CourseOffer/CourseOffer";
-import CourseOfferDetails from "./Pages/CourseOffer/CourseOfferDetails";
+import CourseOfferDetails1 from "./Pages/CourseOffer/CourseOfferDetails1";
+import CourseOfferDetails2 from "./Pages/CourseOffer/CourseOfferDetails2";
+import CourseOfferDetails3 from "./Pages/CourseOffer/CourseOfferDetails3";
+import CourseOfferDetails4 from "./Pages/CourseOffer/CourseOfferDetails4";
 import Programs from "./Pages/Programs";
 import Semester from "./Pages/Semester";
 
@@ -22,8 +25,20 @@ const App = () => {
                     <Route path="/program" element={<Programs />} />
                     <Route path="/courseoffer" element={<CourseOffer />} />
                     <Route
-                        path="/coursedetails"
-                        element={<CourseOfferDetails />}
+                        path="/coursedetails1"
+                        element={<CourseOfferDetails1 />}
+                    />
+                    <Route
+                        path="/coursedetails2"
+                        element={<CourseOfferDetails2 />}
+                    />
+                    <Route
+                        path="/coursedetails3"
+                        element={<CourseOfferDetails3 />}
+                    />
+                    <Route
+                        path="/coursedetails4"
+                        element={<CourseOfferDetails4 />}
                     />
                 </Routes>
             </Router>

@@ -20,6 +20,7 @@ const CourseOffer = () => {
         { section: "" },
         { course: "" },
     ]);
+
     const [showCard1, setShowCard1] = useState(false);
 
     const [course, setCourse] = useState([
@@ -1321,6 +1322,7 @@ const CourseOffer = () => {
     };
 
     const handleSubmit1 = (e) => {
+        setIsModalVisible(false);
         const startDate = new Date(e.startDate).toLocaleDateString();
         const endDate = new Date(e.endDate).toLocaleDateString();
         setForm1Details([
@@ -1554,10 +1556,6 @@ const CourseOffer = () => {
             </React.Fragment>
         );
     };
-    // const firstViewHandler = () => {
-    //     showModal();
-    //     setStep(2);
-    // };
 
     //Disable Current Date and Current Previous
     const disabledDate = (current) => {
@@ -1583,23 +1581,20 @@ const CourseOffer = () => {
                 }}
                 onClick={showModal}
             >
-                Set a Course Offer
+                Start a Semester
             </Button>
 
             {showCard1 && (
                 <Row>
-                    <Col span={12}>
+                    <Col span={24}>
                         <Paper
-                            elevation={20}
                             style={{
                                 padding: "20px",
-                                marginTop: "40px",
-                                marginBottom: "10px",
-                                marginLeft: "30px",
+                                margin: "40px 20px 10px 20px",
                                 background: " rgba( 255, 255, 255, 0.25 )",
                                 boxShadow:
                                     "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-                                borderRadius: "10px",
+                                borderRadius: "5px",
                             }}
                         >
                             <h5
@@ -1612,7 +1607,12 @@ const CourseOffer = () => {
                             </h5>
                             <Table hover striped bordered>
                                 <thead>
-                                    <tr>
+                                    <tr
+                                        style={{
+                                            color: colors.purple,
+                                            textAlign: "center",
+                                        }}
+                                    >
                                         <th>Program</th>
                                         <th>Session</th>
                                         <th>Year</th>
@@ -1621,25 +1621,29 @@ const CourseOffer = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        {from1Details?.map((val, id) => {
-                                            return (
-                                                <>
-                                                    <td>{val.program}</td>
-                                                </>
-                                            );
-                                        })}
+                                    <tr
+                                        style={{
+                                            textAlign: "center",
+                                            backgroundColor: colors.light,
+                                        }}
+                                    >
+                                        <td>M.Sc</td>
+                                        <td>Spring</td>
+                                        <td>2022</td>
+                                        <td>27th July 2022</td>
+                                        <td>05ht August 2022</td>
                                     </tr>
                                 </tbody>
                             </Table>
                             <Link
-                                to="/coursedetails"
-                                state={{ data: from1Details }}
+                                to="/coursedetails1"
+                                state={{
+                                    from1Details,
+                                }}
                                 style={{
                                     padding: "6px 20px",
                                     borderRadius: "2px",
-                                    marginTop: "10px",
-                                    marginLeft: "250px",
+                                    margin: "10px auto 0px auto",
                                     backgroundColor: colors.purple,
                                     color: colors.white,
                                 }}
@@ -1651,10 +1655,6 @@ const CourseOffer = () => {
                 </Row>
             )}
             <Modal
-                bodyStyle={{ height: "100vh" }}
-                style={{
-                    top: 0,
-                }}
                 onCancel={handleCancel}
                 maskClosable={false}
                 title="Course Offers"
@@ -1662,155 +1662,148 @@ const CourseOffer = () => {
                 width="fullwidth"
                 footer={[]}
             >
-                {step === 1 ? (
-                    <Form onFinish={handleSubmit1}>
-                        <Row gutter={30}>
-                            <Col span={8}>
-                                <Form.Item
-                                    name="program"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Please Select a Program!",
-                                        },
-                                    ]}
+                <Form onFinish={handleSubmit1} layout="vertical">
+                    <Row gutter={30}>
+                        <Col span={8}>
+                            <Form.Item
+                                label="Program"
+                                name="program"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please Select a Program!",
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    defaultValue="Programs"
+                                    style={{
+                                        width: "100%",
+                                    }}
                                 >
-                                    <Select
-                                        defaultValue="Select Programs"
-                                        style={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <Option value="B.Sc">B.Sc</Option>
-                                        <Option value="M.Sc">M.Sc</Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
+                                    <Option value="B.Sc">B.Sc</Option>
+                                    <Option value="M.Sc">M.Sc</Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
 
-                            <Col span={8}>
-                                <Form.Item
-                                    name="session"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Please Select a Session!",
-                                        },
-                                    ]}
+                        <Col span={8}>
+                            <Form.Item
+                                label="Session"
+                                name="session"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please Select a Session!",
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    defaultValue="Select Session"
+                                    style={{
+                                        width: "100%",
+                                    }}
                                 >
-                                    <Select
-                                        defaultValue="Select Session"
-                                        style={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <Select.Option value="Summer">
-                                            Summer
-                                        </Select.Option>
-                                        <Select.Option value="Spring">
-                                            Spring
-                                        </Select.Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                                <Form.Item
-                                    name="year"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Please Select a Year!",
-                                        },
-                                    ]}
+                                    <Select.Option value="Summer">
+                                        Summer
+                                    </Select.Option>
+                                    <Select.Option value="Spring">
+                                        Spring
+                                    </Select.Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                label="Year"
+                                name="year"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Please Select a Year!",
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    defaultValue="Year"
+                                    style={{
+                                        width: "100%",
+                                    }}
                                 >
-                                    <Select
-                                        defaultValue="Select Year"
-                                        style={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <Select.Option value="2015">
-                                            2015
-                                        </Select.Option>
-                                        <Select.Option value="2016">
-                                            2016
-                                        </Select.Option>
-                                        <Select.Option value="2017">
-                                            2017
-                                        </Select.Option>
-                                        <Select.Option value="2018">
-                                            2018
-                                        </Select.Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={30}>
-                            <Col span={8}>
-                                <Form.Item
-                                    label="Start Date"
-                                    name="startDate"
-                                    {...config}
+                                    <Select.Option value="2015">
+                                        2015
+                                    </Select.Option>
+                                    <Select.Option value="2016">
+                                        2016
+                                    </Select.Option>
+                                    <Select.Option value="2017">
+                                        2017
+                                    </Select.Option>
+                                    <Select.Option value="2018">
+                                        2018
+                                    </Select.Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={30}>
+                        <Col span={8}>
+                            <Form.Item
+                                label="Date"
+                                name="startDate"
+                                {...config}
+                            >
+                                <DatePicker
+                                    disabledDate={disabledDate}
+                                    style={{ width: "100%" }}
+                                    format={"DD-MM-YYYY"}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item label="Date" name="endDate" {...config}>
+                                <DatePicker
+                                    disabledDate={disabledDate}
+                                    style={{ width: "100%" }}
+                                    format={"DD-MM-YYYY"}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}>
+                            <Form.Item>
+                                <Button
+                                    htmlType="submit"
+                                    style={{
+                                        backgroundColor: colors.purple,
+                                        color: colors.white,
+                                    }}
                                 >
-                                    <DatePicker
-                                        disabledDate={disabledDate}
-                                        style={{ width: "100%" }}
-                                        format={"DD-MM-YYYY"}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                                <Form.Item
-                                    label="End Date"
-                                    name="endDate"
-                                    {...config}
-                                >
-                                    <DatePicker
-                                        disabledDate={disabledDate}
-                                        style={{ width: "100%" }}
-                                        format={"DD-MM-YYYY"}
-                                    />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={8}>
+                                    Set Semester
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    <Row gutter={30}>
+                        <Col>
+                            {showCard1 && (
                                 <Form.Item>
                                     <Button
-                                        onClick={() => setIsModalVisible(false)}
-                                        htmlType="submit"
+                                        onClick={() => setStep(2)}
                                         style={{
                                             backgroundColor: colors.purple,
                                             color: colors.white,
                                         }}
                                     >
-                                        Set Semester
+                                        Continue
                                     </Button>
                                 </Form.Item>
-                            </Col>
-                        </Row>
-
-                        <Row gutter={30}>
-                            <Col>
-                                {showCard1 && (
-                                    <Form.Item>
-                                        <Button
-                                            onClick={() => setStep(2)}
-                                            style={{
-                                                backgroundColor: colors.purple,
-                                                color: colors.white,
-                                            }}
-                                        >
-                                            Continue
-                                        </Button>
-                                    </Form.Item>
-                                )}
-                            </Col>
-                        </Row>
-                    </Form>
-                ) : null}
-
-                {step === 2 ? <SecondForm /> : null}
-                {step === 3 ? <ThirdForm /> : null}
+                            )}
+                        </Col>
+                    </Row>
+                </Form>
             </Modal>
         </React.Fragment>
     );
