@@ -239,7 +239,7 @@ const CourseOffer = () => {
                     <Row gutter={30}>
                         <Col span={8}>
                             <Form.Item
-                                label="Date"
+                                label="Starting Date"
                                 name="startDate"
                                 {...config}
                             >
@@ -251,7 +251,11 @@ const CourseOffer = () => {
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label="Date" name="endDate" {...config}>
+                            <Form.Item
+                                label="Ending Date"
+                                name="endDate"
+                                {...config}
+                            >
                                 <DatePicker
                                     disabledDate={disabledDate}
                                     style={{ width: "100%" }}
