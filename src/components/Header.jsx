@@ -26,6 +26,9 @@ const Header = () => {
                     <li>
                         <Link to="/courseoffer">CourseOffer</Link>
                     </li>
+                    <li>
+                        <Link to="/courseview">Course View</Link>
+                    </li>
                 </>
             </ul>
         </header>

@@ -9,6 +9,8 @@ import CourseOfferDetails1 from "./Pages/CourseOffer/CourseOfferDetails1";
 import CourseOfferDetails2 from "./Pages/CourseOffer/CourseOfferDetails2";
 import CourseOfferDetails3 from "./Pages/CourseOffer/CourseOfferDetails3";
 import CourseOfferDetails4 from "./Pages/CourseOffer/CourseOfferDetails4";
+import CourseView from "./Pages/CourseView/CourseView";
+import CourseViewDetails from "./Pages/CourseView/CourseViewDetails";
 import Programs from "./Pages/Programs";
 import Semester from "./Pages/Semester";
 
@@ -27,6 +29,11 @@ const App = () => {
                     <Route
                         path="/coursedetails1"
                         element={<CourseOfferDetails1 />}
+                    />
+                    <Route path="/courseview" element={<CourseView />} />
+                    <Route
+                        path="/courseviewdetails"
+                        element={<CourseViewDetails />}
                     />
                     <Route
                         path="/coursedetails2"

@@ -102,7 +102,7 @@ element.style {
 }
 
 .card {
-    border-radius: 16px;
+    border-radius: 8px;
     background: linear-gradient(145deg, #ffffff, #ffffff);
     box-shadow: 8px 8px 16px #cfcfcf, -8px -8px 16px #ffffff;
 }
